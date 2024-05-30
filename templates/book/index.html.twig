@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catalogue des livres{% endblock %}
+
+{% block body %}
+<section class="py-5" style="min-height:100vh">
+    <div class="container px-4 px-lg-5 mt-5">
+        <!-- filtre -->
+        <div class="text-end mb-3 col-12">
+            <!-- filtre dans un encard offcanvas -->
+            <button
+                class="btn btn-outline-dark"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#Id1"
+                aria-controls="Id1"
+            >
+                Filtrer les Livres
+            </button>
+            
+            <div
+                class="offcanvas offcanvas-start"
+                data-bs-scroll="true"
+                tabindex="-1"
+                id="Id1"
+                aria-labelledby="Enable both scrolling & backdrop"
+            >
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="Enable both scrolling & backdrop">
+                        Options
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="">
+                        <h4>Filtres</h4>
+                        <!-- filtre pour l'affichage -->
+                        <form method='get' action=''>
+                            <div class="mb-3 row justify-content-between">
+                                <div class="col-4">
+                                    <label class="form-label ">Publié après le </label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="date" name="start" class="form-select ">
+                                </div>
+                            </div>
+                            <div class="mb-3 row justify-content-between">
+                                <div class="col-4">
+                                    <label class="form-label">Publié avant le </label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="date" name="end" class="form-select">
+                                </div>
+                            </div>
+                            <div class="mb-3 row justify-content-between">
+                                <div class="col-4">
+                                    <label class="form-label">Catégories</label>
+                                </div>
+                                <div class="col-8">
+                                    <select
+                                        class="form-select "
+                                        name="category"
+                                        id=""
+                                    >
+                                        <option value="">Choisir une option</option>
+                                        {% for categorie in categories%}
+                                            <option value="{{ categorie.value }}">{{ categorie.getLabel() }} </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row justify-content-between">
+                                <div class="col-4">
+                                    <label class="form-label">Langue</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" name="pays" class="form-select">
+                                </div>
+                            </div>
+                            <div class="mb-3 row justify-content-between">
+                                <div class="col-4">
+                                    <label class="form-label">Editeur</label>
+                                </div>
+                                <div class="col-8">
+                                    <select
+                                        class="form-select "
+                                        name="editor"
+                                        id=""
+                                    >
+                                        <option value="">Choisir une option</option>
+                                        {% for editor in editors%}
+                                            <option value="{{ editor.id }}">{{ editor.name }} </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 text-end">
+                                <input type='submit' value="filtrer" class="btn btn-outline-dark">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <!-- affichage de la liste des livres -->
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for book in books %}
+            <div class="col mb-5">
+                <div class="card h-100 position-relative ">
+                    <!-- Couverture du livre-->
+                    <img class="card-img-top " src="{{ book.cover }}" alt="Couverture de {{ book.title }}" />
+                    <!-- Détails du livre-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Titre du livre-->
+                            <h5 class="fw-bolder">{{ book.title }}</h5>
+                            <!-- Auteurs du livre-->
+                            {{ book.authors|map(a => a.name)|join(', ') }}
+                        </div>
+                    </div>
+                    <!-- Action-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <a class="btn btn-outline-dark mt-auto" href="{{ path('app_book_show', {id: book.id}) }}">Voir</a>
+                        </div>
+                    </div>
+                    <div class="position-absolute end-0 top-0 bg-info text-primary-enphasis rounded px-3 py-1 small">{{ book.category.getLabel() }}</div>
+                </div>
+            </div>
+            {% else %}
+                <p>Aucun livre actuellement</p>
+            {% endfor %}
+        </div>
+        {{ pagerfanta(books) }}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de livres{% endblock %}
+
+{% block body %}
+
+    <section class="container mt-5 py-5" style="min-height:100vh">
+        <div class="row">
+            {% if book is not null %}
+            <div class="col-6 p-3">
+                <img class="card-img-top img-fluid" src="{{ book.cover}}" alt="couverture du livre: {{ book.title }}" />
+            </div>
+            <div class="col-6">
+                <div class="d-flex justify-content-between">
+                    <small class="text-muted">Identifiant: {{ book.id }}</small>
+                    <small>Statut: {{ book.status.getLabel() }}</small>
+                </div>
+                <h1>{{ book.title }}</h1>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><h5>Date d'édition : </h5>{{ book.editedAt|date('d M Y') }}</li>
+                    <li class="list-group-item"><h5>ISBN : </h5>{{ book.isbn }}</li>
+                    <li class="list-group-item">
+                        <h5>Auteur : </h5>
+                        <ul class="list-group list-group-flush">
+                            {% for author in book.authors %}
+                                <li class="list-group-item p-0">
+                                    <a href="{{ path('app_admin_author_show', {id: author.id}) }}">{{ author.name }}</a>
+                                </li>
+                            {% else %}
+                                <li class="list-group-item">Pas d'auteur connu</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="list-group-item">
+                        <h5>Éditeur : </h5>
+                        <a href="{{ path('app_admin_editor_show', {id: book.editor.id}) }}">{{ book.editor.name }}</a>
+                    </li>
+                    <li class="list-group-item"><h5>Nombre de pages : </h5>{{ book.pageNumber }}</li>
+                    <li class="list-group-item"><h5>Langue : </h5>{{ book.langue }}</li>
+                    <li class="list-group-item"><h5>Catégorie : </h5>{{ book.category.getLabel() }}</li>
+                    <li class="list-group-item"><h5>Synopsis : </h5>{{ book.plot }}</li>
+                </ul>
+            </div>
+            {% else %}
+            <div>Livre non trouvé</div>
+            {% endif %}
+            <div class="text-end">
+                <a href="{{ path('app_admin_book_index') }}" class="btn btn-primary">Retour</a>
+                <a href="{{ path('app_admin_book_edit', {id: book.id}) }}" class="btn btn-info">Éditer</a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

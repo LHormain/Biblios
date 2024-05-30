@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste d'auteurs{% endblock %}
+
+{% block body %}
+
+<section class="container mt-5 py-5 " style="min-height:100vh">
+    <div class="row">
+        <h1>Liste d'auteurs</h1>
+        <div class="text-end mb-3 col-12">
+            <a class="btn btn-outline-dark" href="{{ path('app_admin_main')}}">retour</a>
+            <!-- filtre dans un encard offcanvas -->
+            <button
+                class="btn btn-outline-dark"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#Id1"
+                aria-controls="Id1"
+            >
+                Filtrer les auteurs
+            </button>
+            
+            <div
+                class="offcanvas offcanvas-start"
+                data-bs-scroll="true"
+                tabindex="-1"
+                id="Id1"
+                aria-labelledby="Enable both scrolling & backdrop"
+            >
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="Enable both scrolling & backdrop">
+                        Options
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="">
+                        <h4>Filtres</h4>
+                        <!-- filtre pour l'affichage -->
+                        <form method='get' action=''>
+                            <div class="mb-3 d-flex justify-content-between">
+                                <label>Date de naissance</label>
+                                <input type="date" name="start">
+                            </div>
+                            <div class="mb-3 d-flex justify-content-between">
+                                <label>Date de décès</label>
+                                <input type="date" name="end">
+                            </div>
+                            <div class="mb-3 d-flex justify-content-between">
+                                <label>Nationalité</label>
+                                <input type="text" name="place">
+                            </div>
+                            <div class="mb-3 text-end">
+                                <input type='submit' value="filtrer" class="btn btn-outline-dark">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <!-- début de l'affichage des auteurs -->
+        <ul class="list-group list-group-flush">
+            {% for author in authors %}
+                <div class="card">
+                    <div class="card-body row">
+                        <div class="col-6">
+                            <h4 class="card-title">{{ author.name }}</h4>
+                            <p class="card-text text-muted">Identifiant : {{ author.id }}</p>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a href="{{ path('app_admin_author_show', {id: author.id}) }}" class="btn btn-outline-dark px-5">Voir</a>
+                            <a href="{{ path('app_admin_author_edit', {id: author.id}) }}" class="btn btn-outline-info">Modifier</a>
+                        </div>
+                    </div>
+                </div>
+                
+            {% else %}
+                <li>Aucun enregistrement en base de données</li>
+            {% endfor %}
+        </ul>
+        {{ pagerfanta(authors)}}
+    </div>
+</section>
+{% endblock %}
+

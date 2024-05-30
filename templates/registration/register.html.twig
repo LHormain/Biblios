@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<section class="container mt-5 py-5" style="min-height:100vh">
+    <div class="row">
+        <div class="offset-4 col-4 d-flex flex-column justify-content-center" style="min-height:65vh">
+            <h1>Enregistrement</h1>
+            <span class="text-muted mb-5">*: champ requis </span>
+
+            {{ form_errors(registrationForm) }}
+
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.firstname) }}
+                {{ form_row(registrationForm.lastname) }}
+                {{ form_row(registrationForm.username) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.roles, {label: 'Rôles'}) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-outline-dark">Register</button>
+                </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+</section>
+{% endblock %}

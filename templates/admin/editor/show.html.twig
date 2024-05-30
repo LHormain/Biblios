@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste d'éditeurs{% endblock %}
+
+{% block body %}
+
+    <section class="container mt-5 pt-5" style="min-height:100vh">
+        <h1>Editeur : </h1>
+        {% if editor is not null %}
+            <div class="card mb-1 m-auto">
+                <div class="card-body">
+                    <div class="card-title d-flex justify-content-between">
+                        <h4 class="mb-1">{{ editor.name }}</h4>
+                        <small class="text-muted">Identifiant : {{ editor.id }}</small>
+                    </div>
+                    
+                </div>
+                <div class="card-footer d-flex justify-content-end">
+                    <a href="{{ path('app_admin_editor_index') }}" class="btn btn-primary mx-3">Retour</a>
+                    <a href="{{ path('app_admin_editor_edit', {id: editor.id}) }}" class="btn btn-warning mx-3">Éditer</a>
+                </div>
+            </div>
+        {% else %}
+            <div>Editeur non trouvé</div>
+        {% endif %}
+        <a href="{{ path('app_admin_editor_index') }}" class="btn btn-primary">Retour</a>
+    </section>
+
+{% endblock %}

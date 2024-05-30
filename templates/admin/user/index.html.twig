@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+
+<section class="container mt-5 py-5" style="min-height:100vh">
+    <h1>Liste des Utilisateurs</h1>
+    <div class="text-end mb-3">
+        <a class="btn btn-outline-dark" href="{{ path('app_admin_main')}}">retour</a>
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for user in users %}
+            <div class="card position-relative">
+                <div class="card-body">
+                    <h4 class="card-title">{{ user.firstname }} {{ user.lastname }}</h4>
+                    <p class="card-text text-muted">
+                        Identifiant : {{ user.id }} <br>
+                        Pseudo : {{ user.username }} <br>
+                        Mail : {{ user.email }}
+                    </p>
+                </div>
+                    <div class="position-absolute  top-0 end-0">
+                    {% for role in user.roles %}
+                        {% if role == 'ROLE_ADMIN' %}
+                        <div class="  badge rounded-pill bg-danger">
+                            Admin
+                        </div>
+                        {% elseif role == 'ROLE_AJOUT_DE_LIVRE' %}
+                        <div class="  badge rounded-pill bg-success">
+                            Ajout de nouveaux livres
+                        </div>
+                        {% elseif role == 'ROLE_EDITION_DE_LIVRE' %}
+                        <div class="  badge rounded-pill bg-info">
+                            Editions
+                        </div>
+                        {% elseif role == 'ROLE_USER' %}
+                        <div class="  badge rounded-pill bg-warning">
+                            Utilisateur
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+            </div>
+            
+        {% else %}
+            <li>
+                Auncun enregistrement en base de données
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pagerfanta(users)}}
+</section>
+{% endblock %}

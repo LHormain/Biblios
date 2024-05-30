@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste d'éditeurs{% endblock %}
+
+{% block body %}
+
+<section class="container mt-5 py-5" style="min-height:100vh">
+    <h1>Liste d'éditeurs</h1>
+    <div class="text-end mb-3">
+        <a class="btn btn-outline-dark" href="{{ path('app_admin_main')}}">retour</a>
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for editor in editors %}
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{ path('app_admin_editor_show', {id: editor.id})}}" class="stretched-link link-dark">
+                        <h4 class="card-title">{{ editor.name }}</h4>
+                    </a>
+                    <p class="card-text text-muted">Identifiant : {{ editor.id }}</p>
+                </div>
+            </div>
+            
+        {% else %}
+            <li>
+                Auncun enregistrement en base de données
+            </li>
+        {% endfor %}
+    </ul>
+    {{ pagerfanta(editors)}}
+
+</section>
+{% endblock %}

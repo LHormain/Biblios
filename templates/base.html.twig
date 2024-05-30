@@ -2,7 +2,10 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Biblios - {% block title %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
         {% endblock %}
@@ -11,7 +14,112 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body id="page-top" >
+        <!-- Barre de navigation  -->
+        <nav
+            class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top" 
+            id="mainNav"
+        >
+            <div class="container px-4">
+                <a class="navbar-brand" href="{{ path('app_main') }}">Biblios</a>
+                <button
+                    class="navbar-toggler d-lg-none"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavId"
+                    aria-controls="collapsibleNavId"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
+                    <ul class="navbar-nav  mt-2 mt-lg-0 ">
+                        
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{{ path('app_book_index') }}">Catalogue</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_login')}}">Se connecter</a>
+                        </li>
+                        <!-- Seulement si un admin est connecté -->
+                        {% if is_granted('ROLE_ADMIN') %}  
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_admin_main')}}">Administration</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    
+        <div class="bg-light" >
+            {% block body %}{% endblock %}
+        </div>
+
+        <!-- Footer-->
+        <footer class="py-5 bg-dark ">
+            <div class="container px-4 text-light">
+                <div class="row justify-content-center align-items-centers">
+                    <div class="col-4">
+                        <h4 >Contactez nous :</h4>
+                        <ul
+                            class="nav justify-content-center flex-column"
+                        >
+                            <li class="nav-item">
+                                <a class="nav-link disabled text-light" href="#" aria-current="page"
+                                    >123 Rue des Lumières,<br>
+                                    Villeclair, 45678,<br>
+                                    France</a
+                                >
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled text-light" href="#">✆ +33 1 23 45 67 89</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" href="mailto:contact@mediathequehorizon.vc">contact@mediathequehorizon.vc</a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                    <div class="col-4 ">
+                        <h4>Horaires d'ouverture :</h4>
+                        <ul
+                            class="nav justify-content-center flex-column"
+                        >
+                            <li class="nav-item ps-3">Lundi : 10h00 - 18h00</li>
+                            <li class="nav-item ps-3">Mardi : 10h00 - 18h00</li>
+                            <li class="nav-item ps-3">Mercredi : 10h00 - 20h00</li>
+                            <li class="nav-item ps-3">Jeudi : 10h00 - 18h00</li>
+                            <li class="nav-item ps-3">Vendredi : 10h00 - 18h00</li>
+                            <li class="nav-item ps-3">Samedi : 10h00 - 17h00</li>
+                            <li class="nav-item ps-3">Dimanche : Fermé</li>
+                        </ul>
+                        
+                    </div>
+                    <div class="col-4 align-self-stretch">
+                        <h4>Suivez-nous :<h4>
+                        <ul
+                            class="nav h-100"
+                        >
+                            <li class="nav-item">
+                                <a class="nav-link " href="facebook.com/mediathequehorizon" ><img src="{{asset('images/logos/facebook.png')}}" class="icone" alt="lien facebook"/></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="twitter.com/mediatheqhorizon"><img src="{{asset('images/logos/twitter.png')}}" class="icone" alt="lien X"/></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="instagram.com/mediathequehorizon"><img src="{{asset('images/logos/instagram.png')}}" class="icone" alt="lien instagram"/></a>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+                <p class="mx-0 mb-0 mt-3 text-center text-white">Copyright &copy; Biblios</p>
+            </div>
+        </footer>
     </body>
 </html>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

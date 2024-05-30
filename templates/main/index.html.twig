@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{# commentaires#}
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<div style="min-height:100vh" >
+    <!-- Header -->
+    <header class="bg-primary bg-gradient text-light py-5 mt-5 ">
+        <div class="container-fluid flex-column align-items-center ">
+            <div class="row">
+                <div class=" col-12  d-flex flex-column align-items-center ">
+                    <h1 class="fw-bolder"> {{ controller_name }}</h1>
+                    <p class=" lead">{{ controller_subtitle }}</p>
+                    
+                
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- About section -->
+    <section class="container pb-5">
+        <div class="row justify-content-center position-relative">
+            <div class="">
+                <img src="{{asset('images/facade.jpg')}}" alt="vue de l'antré de la médiathèque" class="img-fluid py-5 facade">
+            </div>
+            <div class="position-absolute top-0 start-0 mt-5 pt-5 w-100 text-center">
+                <a href="{{ path('app_book_index')}}" class="btn btn-light btn-lg mt-5">Parcourez le catalogue</a>
+            </div>
+            <div class="col-8 p-5 position-absolute bottom-0 end-0 bg-info">
+                <h2>{{ controller_name }}: qu'est-ce que c'est ?</h2>
+                <p class="lead">Bienvenue sur Horizon Connect, l'application officielle de la Médiathèque Horizon à Villeclair. Conçue pour offrir une expérience utilisateur optimale, Horizon Connect vous permet d'accéder facilement et rapidement à l'ensemble des ressources de notre médiathèque, où que vous soyez.</p>
+                <p>Fonctionnalités clés :</p>
+                <ul>
+                    <li>Recherche intuitive : Explorez notre vaste catalogue de livres, e-books, audiobooks, et bien plus encore grâce à notre moteur de recherche avancé.</li>
+                    <li>Consultation en temps réel du statut des oeuvres (disponible, emprunté, indisponible)</li>
+                    <li>Affichage détaillé des informations sur les oeuvres</li>
+                    <li>Processus de réservation simplifié</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

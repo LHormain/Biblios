@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello mainController!{% endblock %}
+
+{% block body %}
+<div class="" style="min-height:100vh">
+<header class="container mt-5 py-5">
+    <div class="row">
+        <div class="text-center">
+            <h1>Biblios</h1>
+            <p class="lead">Administration</p>
+        </div>
+    </div>
+</header>
+<section class="container" id="about">
+    <div class="row justify-content-center py-4">
+        <div class="col-8">
+            <ul class="nav justify-content-evenly  ">
+                <li class="nav-item">
+                    <h2 class="fs-5">Livres</h2>
+                    <a class="nav-link " href="{{ path('app_admin_book_index' )}}" >Liste</a>
+                    <a class="nav-link " href="{{ path('app_admin_book_new' )}}"  >Ajout</a>
+                </li>
+                <li class="nav-item">
+                    <h2 class="fs-5">Auteurs</h2>
+                    <a class="nav-link" href="{{ path('app_admin_author_index' )}}">Liste</a>
+                    <a class="nav-link" href="{{ path('app_admin_author_new' )}}"  >Ajout</a>
+                </li>
+                <li class="nav-item">
+                    <h2 class="fs-5">Editeurs</h2>
+                    <a class="nav-link " href="{{ path('app_admin_editor_index' )}}">Liste</a>
+                    <a class="nav-link " href="{{ path('app_admin_editor_new' )}}"  >Ajout</a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center flex-column mt-5">
+                <a href="{{ path('app_register') }}" class="btn btn-outline-dark px-5 mb-5">Ajouter un utilisateur</a>
+                <a href="{{ path('app_admin_user_index') }}" class="btn btn-outline-dark px-5 ">Voir la liste des utilisateurs</a>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+{% endblock %}
