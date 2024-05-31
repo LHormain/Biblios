@@ -1,15 +1,59 @@
+:root {
+    --primary : #0d5f74;
+    --secondary : #9acdfcbd;
+}
 body {
     color: black;
     margin: 0;
     padding: 0;
     height: 100%;
 }
+/* footer */
 .icone {
     width: 30px;
     height: 30px;
 }
+/* main */
 .facade {
     max-height: 700px;
     width: 100vw;
     object-fit: cover;
+}
+.main-entete {
+    background: linear-gradient(var(--primary), transparent);
+    text-shadow: black 1px 2px 3px;
+}
+.encart-main {
+    background: linear-gradient(var(--primary), var(--secondary), transparent);
+    color: white;
+    text-shadow: black 1px 2px 3px;
+}
+/* catalogue */
+.catalogue-hov {
+    text-shadow: none;
+}
+.catalogue-hov:hover {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.26);
+    text-shadow: black 1px 2px 3px;
+}
+.card-catalogue {
+    background-color: transparent;
+    border: none;
+    max-width: 300px;
+}
+.card-catalogue .card-text {
+    display: none;
+}
+.card-catalogue:hover .card-text {
+    color: white;
+    display: inline-block;
+    max-width: 300px;
+    height: 350px;
+    background: linear-gradient(#000, var(--secondary));
+    border-radius: 10px;
+}
+.encart-catalogue {
+    background: linear-gradient(transparent, var(--secondary), var(--primary));
+    height: 100vh;
 }

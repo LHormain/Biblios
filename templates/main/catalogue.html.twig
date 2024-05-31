@@ -6,15 +6,36 @@
 <div style="min-height:100vh" >
 
     <!-- About section -->
-    <section class="container py-5 mt-5 ">
-        <div class="row justify-content-center  position-relative bg-info ">
+    <section class="container-fluid py-5 mt-5  encart-catalogue">
+        <div class="row justify-content-center  position-relative ">
             <div class="">
                 <img src="{{asset('images/facade.jpg')}}" alt="vue de l'antré de la médiathèque" class="img-fluid py-5 facade">
             </div>
-            <div class="position-absolute top-0 start-0 mt-5 pt-5 w-100 text-center ">
-                <a href="{{ path('app_book_index')}}?mediaType=book" class="btn btn-light btn-lg mt-5">Parcourez le catalogue de livres</a>
-                <a href="{{ path('app_book_index')}}?mediaType=film" class="btn btn-light btn-lg mt-5">Parcourez le catalogue de films</a>
-                <a href="{{ path('app_book_index')}}?mediaType=music" class="btn btn-light btn-lg mt-5">Parcourez le catalogue de musiques</a>
+            <div class="position-absolute top-0 start-0 mt-5 pt-5 w-100 d-flex justify-content-center">
+                <div class="card card-catalogue">
+                    <div class="card-body">
+                        <a href="{{ path('app_book_index')}}?mediaType=book" class="btn btn-light btn-lg mt-5 catalogue-hov">Parcourez le catalogue de livres</a>
+                        <p class="card-text p-3">
+                            Occaecat occaecat mollit reprehenderit elit officia. Do cillum veniam esse amet fugiat voluptate ad cupidatat mollit anim. Reprehenderit irure ad cupidatat enim labore amet ipsum culpa nisi. Eiusmod aliqua cillum veniam aliquip incididunt aliquip sint ea.
+                        </p>
+                    </div>
+                </div>
+                <div class="card card-catalogue">
+                    <div class="card-body">
+                        <a href="{{ path('app_book_index')}}?mediaType=film" class="btn btn-light btn-lg mt-5 catalogue-hov">Parcourez le catalogue de films</a>
+                        <p class="card-text p-3">
+                            Commodo aliqua in occaecat minim anim exercitation nostrud enim consectetur reprehenderit Lorem aute tempor. Voluptate commodo ad consequat consectetur id magna magna ipsum dolore qui est sit ut Lorem. Fugiat deserunt aliquip cupidatat veniam incididunt officia nisi magna velit.
+                        </p>
+                    </div>
+                </div>
+                <div class="card card-catalogue">
+                    <div class="card-body">
+                        <a href="{{ path('app_book_index')}}?mediaType=music" class="btn btn-light btn-lg mt-5 catalogue-hov">Parcourez le catalogue de musiques</a>
+                        <p class="card-text p-3">
+                            Do consequat ullamco aute ex reprehenderit. Proident consequat aliquip velit minim. Elit ea ad magna in aliquip ad ad nisi amet dolore voluptate. Ullamco nulla aliqua ullamco velit quis nisi ex.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
