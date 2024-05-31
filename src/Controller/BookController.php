@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Enum\BookCategories;
+use App\Enum\MediaTypes;
 use App\Repository\BookRepository;
 use App\Repository\EditorRepository;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
@@ -17,9 +18,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class BookController extends AbstractController
 {
     #[Route('', name: 'app_book_index', methods: ['GET'])]
-    public function index(Request $request, BookRepository $repository, EditorRepository $editorRepository): Response
+    public function index(?MediaTypes $type, Request $request, BookRepository $repository, EditorRepository $editorRepository): Response
     {
         $filtres = [];
+
+        $titre_en_tete = 'médias';
 
         if ($request->query->has('start') && ($request->query->get('start')!= '')) {
             $filtres['start'] = $request->query->get('start');
@@ -41,6 +44,20 @@ class BookController extends AbstractController
             $filtres['editor'] = $request->query->get('editor');
         }
 
+        if ($request->query->has('mediaType') && ($request->query->get('mediaType')!= '')) {
+            $filtres['mediaType'] = $request->query->get('mediaType');
+
+            if ($filtres['mediaType'] == 'book') {
+                $titre_en_tete = 'livres';
+            }
+            elseif ($filtres['mediaType'] == 'film') {
+                $titre_en_tete = 'films';
+            }
+            elseif ($filtres['mediaType'] == 'music') {
+                $titre_en_tete = 'musiques';
+            }
+        }
+
         $books = Pagerfanta::createForCurrentPageWithMaxPerPage(
             // new QueryAdapter($repository->createQueryBuilder('b')),
             new QueryAdapter($repository->findByFilter($filtres)),
@@ -53,7 +70,9 @@ class BookController extends AbstractController
         return $this->render('book/index.html.twig', [
             'books' => $books,
             'categories' => BookCategories::getAssociatedArray(),
+            'medias' => MediaTypes::getAssociatedArray(),
             'editors' => $editors,
+            'enTete' => $titre_en_tete,
         ]);
     }
 

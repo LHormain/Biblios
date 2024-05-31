@@ -47,6 +47,11 @@ class BookRepository extends ServiceEntityRepository
                ->setParameter('editor', $filtres['editor']);
         }
 
+        if (\array_key_exists('mediaType', $filtres)) {
+            $qb->andWhere('b.mediaType = :mediaType')
+               ->setParameter('mediaType', $filtres['mediaType']);
+        }
+
         return $qb;
     }
     //    /**

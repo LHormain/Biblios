@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Catalogue des livres{% endblock %}
+{% block title %}Catalogue des {{ enTete }}{% endblock %}
 
 {% block body %}
 <section class="py-5" style="min-height:100vh">
     <div class="container px-4 px-lg-5 mt-5">
         <!-- filtre -->
         <div class="text-end mb-3 col-12">
+            <h1 class="text-center mb-3">Liste des {{ enTete }} proposé par notre médiathèque</h1>
             <!-- filtre dans un encard offcanvas -->
             <button
                 class="btn btn-outline-dark"
@@ -15,7 +16,7 @@
                 data-bs-target="#Id1"
                 aria-controls="Id1"
             >
-                Filtrer les Livres
+                Filtrer les {{ enTete }}
             </button>
             
             <div
@@ -55,6 +56,23 @@
                                 </div>
                                 <div class="col-8">
                                     <input type="date" name="end" class="form-select">
+                                </div>
+                            </div>
+                            <div class="mb-3 row justify-content-between">
+                                <div class="col-4">
+                                    <label class="form-label">Type de médias</label>
+                                </div>
+                                <div class="col-8">
+                                    <select
+                                        class="form-select "
+                                        name="mediaType"
+                                        id=""
+                                    >
+                                        <option value="">Choisir une option</option>
+                                        {% for media in medias %}
+                                            <option value="{{ media.value }}">{{ media.getLabel() }} </option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                             <div class="mb-3 row justify-content-between">

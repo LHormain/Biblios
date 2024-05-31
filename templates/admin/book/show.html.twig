@@ -17,10 +17,12 @@
                 </div>
                 <h1>{{ book.title }}</h1>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><h5>Date d'édition : </h5>{{ book.editedAt|date('d M Y') }}</li>
-                    <li class="list-group-item"><h5>ISBN : </h5>{{ book.isbn }}</li>
+                    <li class="list-group-item"><h5>Date de sortie : </h5>{{ book.editedAt|date('d M Y') }}</li>
                     <li class="list-group-item">
-                        <h5>Auteur : </h5>
+                        <h5>{% if book.mediaType.value == 'book' %} ISBN : {% else %} EAN-13 :{% endif %}</h5>{{ book.isbn }}
+                    </li>
+                    <li class="list-group-item">
+                        <h5>{% if book.mediaType.value == 'book' %} Auteur : {% elseif book.mediaType.value == 'film' %} Réalisateur : {% else %} Artiste : {% endif %}</h5>
                         <ul class="list-group list-group-flush">
                             {% for author in book.authors %}
                                 <li class="list-group-item p-0">
@@ -32,13 +34,14 @@
                         </ul>
                     </li>
                     <li class="list-group-item">
-                        <h5>Éditeur : </h5>
+                        <h5>{% if book.mediaType.value == 'book' %} Editeur : {% else %} Producteur :{% endif %}</h5>
                         <a href="{{ path('app_admin_editor_show', {id: book.editor.id}) }}">{{ book.editor.name }}</a>
                     </li>
-                    <li class="list-group-item"><h5>Nombre de pages : </h5>{{ book.pageNumber }}</li>
+                    <li class="list-group-item"><h5>{% if book.mediaType.value == 'book' %} Nombre de pages : {% else %} Durée (en min) :{% endif %}</h5>{{ book.pageNumber }}</li>
                     <li class="list-group-item"><h5>Langue : </h5>{{ book.langue }}</li>
+                    <li class="list-group-item"><h5>Type de médias : </h5>{{ book.mediaType.getLabel() }}</li>
                     <li class="list-group-item"><h5>Catégorie : </h5>{{ book.category.getLabel() }}</li>
-                    <li class="list-group-item"><h5>Synopsis : </h5>{{ book.plot }}</li>
+                    <li class="list-group-item"><h5>{% if book.mediaType.value == 'music' %} Description : {% else %} Synopsis :{% endif %}</h5>{{ book.plot }}</li>
                 </ul>
             </div>
             {% else %}
