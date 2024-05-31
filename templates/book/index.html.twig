@@ -70,7 +70,7 @@
                                     >
                                         <option value="">Choisir une option</option>
                                         {% for media in medias %}
-                                            <option value="{{ media.value }}">{{ media.getLabel() }} </option>
+                                            <option value="{{ media.value }}" {% if media.value == filtre %} selected {% endif %}>{{ media.getLabel() }} </option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -94,7 +94,7 @@
                             </div>
                             <div class="mb-3 row justify-content-between">
                                 <div class="col-4">
-                                    <label class="form-label">Langue</label>
+                                    <label class="form-label">Pays</label>
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="pays" class="form-select">

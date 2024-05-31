@@ -16,4 +16,11 @@ class MainController extends AbstractController
             'controller_subtitle' => 'Catalogue en ligne de la médiathèque Horizon de Villeclair',
         ]);
     }
+
+    #[Route('/catalogue', name: 'app_catalogue')]
+    public function catalogue(): Response
+    {
+        return $this->render('main/catalogue.html.twig', 
+        );
+    }
 }

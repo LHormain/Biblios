@@ -73,6 +73,7 @@ class BookController extends AbstractController
             'medias' => MediaTypes::getAssociatedArray(),
             'editors' => $editors,
             'enTete' => $titre_en_tete,
+            'filtre' => $filtres['mediaType'],
         ]);
     }
 
