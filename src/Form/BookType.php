@@ -7,6 +7,7 @@ use App\Entity\Book;
 use App\Entity\Editor;
 use App\Enum\BookCategories;
 use App\Enum\BookStatus;
+use App\Enum\MediaTypes;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -67,6 +68,10 @@ class BookType extends AbstractType
             ->add('category', EnumType::class, [
                 'class' => BookCategories::class,
                 'label' => 'Catégorie',
+            ])
+            ->add('mediaType', EnumType::class, [
+                'class' => MediaTypes::class,
+                'label' => 'Type de média',
             ])
         ;
     }

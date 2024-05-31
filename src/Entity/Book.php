@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Enum\BookCategories;
 use App\Enum\BookStatus;
+use App\Enum\MediaTypes;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -75,6 +76,9 @@ class Book
 
     #[ORM\Column(length: 50)]
     private ?BookCategories $category = null;
+
+    #[ORM\Column(length: 20)]
+    private ?MediaTypes $mediaType = null;
 
     public function __construct()
     {
@@ -269,6 +273,18 @@ class Book
     public function setCategory(BookCategories $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getMediaType(): ?MediaTypes
+    {
+        return $this->mediaType;
+    }
+
+    public function setMediaType(MediaTypes $mediaType): static
+    {
+        $this->mediaType = $mediaType;
 
         return $this;
     }
