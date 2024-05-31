@@ -5,6 +5,7 @@ namespace App\Factory;
 use App\Entity\Book;
 use App\Enum\BookCategories;
 use App\Enum\BookStatus;
+use App\Enum\MediaTypes;
 use App\Repository\BookRepository;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
@@ -61,6 +62,7 @@ final class BookFactory extends ModelFactory
             'title' => self::faker()->unique()->sentence(),
             'langue' => self::faker()->country(),
             'category' => self::faker()->randomElement(BookCategories::cases()),
+            'mediaType' => self::faker()->randomElement(MediaTypes::cases()),
         ];
     }
 
