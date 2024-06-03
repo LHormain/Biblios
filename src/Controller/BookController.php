@@ -9,9 +9,11 @@ use App\Enum\MediaTypes;
 use App\Enum\CommentStatus;
 use App\Form\CommentType;
 use App\Repository\BookRepository;
+use App\Repository\CommentRepository;
 use App\Repository\EditorRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -83,9 +85,9 @@ class BookController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_book_show', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
-    public function show(?Book $book, ?Comment $comment, Request $request, EntityManagerInterface $manager): Response
+    public function show(?Book $book, ?Comment $comment, Request $request, EntityManagerInterface $manager, CommentRepository $repository): Response
     {
-
+        // formulaire pour commentaires
         $comment ??= new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $today = new DateTimeImmutable();
@@ -100,15 +102,23 @@ class BookController extends AbstractController
             $manager->persist($comment);
             $manager->flush();
 
-            return $this->render('book/show.html.twig', [
-                'book' => $book,
-                'form' => $form,
-            ]);
+
         }
 
+        $media['book'] = $book->getId();
+        $media['status'] = 'Published';
+
+        $comments = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            // new QueryAdapter($repository->createQueryBuilder('c')),
+            new QueryAdapter($repository->findByMedia($media)),
+            $request->query->get('page', default: 1),
+            maxPerPage: 4
+        );
+        
         return $this->render('book/show.html.twig', [
             'book' => $book,
             'form' => $form,
+            'comments' => $comments,
         ]);
     }
 }

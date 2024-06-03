@@ -4,9 +4,9 @@ namespace App\Enum;
 
 enum CommentStatus: string
 {
-    case Pending = 'En attente';
-    case Published = 'Publié';
-    case Moderated = 'Modéré';
+    case Pending = 'Pending';
+    case Published = 'Published';
+    case Moderated = 'Moderated';
     
     public function getLabel(): string
     {

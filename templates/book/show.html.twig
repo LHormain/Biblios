@@ -33,24 +33,47 @@
                     </div>
                     <p class="lead">{{ book.plot }}</p>
                     <div class="d-flex">
-                        <a href="{{ path('app_book_index') }}">
+                        <a href="{{ path('app_book_index') }}?mediaType={{book.mediaType.name}}">
                             <button class="btn btn-outline-dark flex-shrink-0" type="button">
                                 Retour à la liste
                             </button>
                         </a>
                     </div>
-                    <div>
+                    <div class="mt-3 p-3 border rounded">
+                        <h2 class="fs-5 text-center">Votre avis</h2>
                         <!-- commenter -->
                         {{ form_start(form) }}
                             {{ form_row(form.name)}}
                             {{ form_row(form.email)}}
                             {{ form_row(form.content)}}
-                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary px-3">Envoyer</button>
+                            </div>
                         {{ form_end(form) }}
                     </div>
                 </div>
+                <div class="offset-1 col-10 text-center mt-3">
+                    <h2>Les avis de nos visiteurs</h2>
+                    {% for comment in comments %}
+                    <div class="card my-2">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>{{ comment.content }}</p>
+                                <footer class="blockquote-footer">
+                                    
+                                    <cite title="Source title">{{ comment.name }}</cite>
+                                </footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                    {% else %}
+                        Aucun commentaires actuelement
+                    {% endfor %}
+                    <div class="d-flex justify-content-center">
+                    {{ pagerfanta(comments) }}
+                    </div>
+                </div>
             </div>
-            
         </div>
     </section>
 {% endblock %}
