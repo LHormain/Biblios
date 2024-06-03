@@ -27,6 +27,9 @@ body {
     background: linear-gradient(var(--primary), var(--secondary), transparent);
     color: white;
     text-shadow: black 1px 2px 3px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 /* catalogue */
 .catalogue-hov {
@@ -56,4 +59,11 @@ body {
 .encart-catalogue {
     background: linear-gradient(transparent, var(--secondary), var(--primary));
     height: 100vh;
+}
+
+/* responsive */
+@media (max-width: 767px) {
+    .encart-main {
+        position: static;
+    }
 }

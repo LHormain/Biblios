@@ -39,6 +39,15 @@
                             </button>
                         </a>
                     </div>
+                    <div>
+                        <!-- commenter -->
+                        {{ form_start(form) }}
+                            {{ form_row(form.name)}}
+                            {{ form_row(form.email)}}
+                            {{ form_row(form.content)}}
+                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                        {{ form_end(form) }}
+                    </div>
                 </div>
             </div>
             

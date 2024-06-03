@@ -37,6 +37,11 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?Book $book = null;
 
+    public function __construct()
+    {
+        
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

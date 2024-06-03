@@ -3,10 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\Comment;
 use App\Enum\BookCategories;
 use App\Enum\MediaTypes;
+use App\Enum\CommentStatus;
+use App\Form\CommentType;
 use App\Repository\BookRepository;
 use App\Repository\EditorRepository;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -77,11 +82,33 @@ class BookController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_book_show', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function show(?Book $book): Response
+    #[Route('/{id}', name: 'app_book_show', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function show(?Book $book, ?Comment $comment, Request $request, EntityManagerInterface $manager): Response
     {
+
+        $comment ??= new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $today = new DateTimeImmutable();
+        $status = CommentStatus::Pending;
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setBook($book);
+            $comment->setCreatedAt($today);
+            $comment->setStatus($status);
+            
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->render('book/show.html.twig', [
+                'book' => $book,
+                'form' => $form,
+            ]);
+        }
+
         return $this->render('book/show.html.twig', [
             'book' => $book,
+            'form' => $form,
         ]);
     }
 }
