@@ -9,9 +9,9 @@
     <div class="text-end mb-3">
         <a class="btn btn-outline-dark" href="{{ path('app_admin_main')}}">retour</a>
     </div>
-    <ul class="list-group list-group-flush">
+    <ul class="list-group list-group-flush ">
         {% for user in users %}
-            <div class="card position-relative">
+            <div class="card position-relative ">
                 <div class="card-body">
                     <h4 class="card-title">{{ user.firstname }} {{ user.lastname }}</h4>
                     <p class="card-text text-muted">
@@ -20,7 +20,7 @@
                         Mail : {{ user.email }}
                     </p>
                 </div>
-                    <div class="position-absolute  top-0 end-0">
+                <div class="position-absolute  top-0 end-0">
                     {% for role in user.roles %}
                         {% if role == 'ROLE_ADMIN' %}
                         <div class="  badge rounded-pill bg-danger">
@@ -34,13 +34,25 @@
                         <div class="  badge rounded-pill bg-info">
                             Editions
                         </div>
+                        {% elseif role == 'ROLE_MODERATEUR' %}
+                        <div class="  badge rounded-pill bg-warning">
+                            Modérateur
+                        </div>
                         {% elseif role == 'ROLE_USER' %}
                         <div class="  badge rounded-pill bg-warning">
                             Utilisateur
                         </div>
                         {% endif %}
                     {% endfor %}
-                    </div>
+                </div>
+                <div class="text-center mb-3">
+                        <a href="{{ path('app_admin_user_index') }}?id={{ user.id }}&role=admin" alt="" class="btn btn-outline-danger rounded-pill px-3 me-3">+ role admin</a>
+                        <a href="{{ path('app_admin_user_index') }}?id={{ user.id }}&role=edit" alt="" class="btn btn-outline-info rounded-pill px-3 me-3">+ role edition</a>
+                        <a href="{{ path('app_admin_user_index') }}?id={{ user.id }}&role=add" alt="" class="btn btn-outline-success rounded-pill px-3 me-3">+ role ajout de livre</a>
+                        <a href="{{ path('app_admin_user_index') }}?id={{ user.id }}&role=mod" alt="" class="btn btn-outline-warning rounded-pill px-3 me-3">+ role modérateur</a>
+                        <a href="{{ path('app_admin_user_index') }}?id={{ user.id }}&role=user" alt="" class="btn btn-outline-warning rounded-pill px-3 me-3">supprimer les droits d'admins</a>
+                    <a href="{{ path('app_admin_user_index') }}?id={{ user.id }}&sup=1" alt="supprimer l'utilisateur" class="btn btn-outline-danger px-3 me-5">Supprimer l'utilisateur</a>
+                </div>
             </div>
             
         {% else %}

@@ -25,6 +25,14 @@
                     <a href="{{ path('app_admin_author_index') }}" class="btn btn-primary mx-3">Retour</a>
                     <a href="{{ path('app_admin_author_edit', {id: author.id}) }}" class="btn btn-warning mx-3">Éditer</a>
                 </div>
+                <div>
+                    <h2 class="fs-5 ms-3">Liste des oeuvres:</h2>
+                    <ul>
+                    {% for book in author.books %}
+                        <li>{{ book.title }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
             </div>
         {% else %}
             <div>Auteur non trouvé</div>
