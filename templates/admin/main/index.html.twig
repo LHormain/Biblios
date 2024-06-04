@@ -14,7 +14,7 @@
 </header>
 <section class="container" id="about">
     <div class="row justify-content-center py-4">
-        <div class="col-8">
+        <div class="col-10">
             <ul class="nav justify-content-evenly  ">
                 <li class="nav-item">
                     <h2 class="fs-5">Livres, Film et Musiques</h2>
@@ -30,6 +30,10 @@
                     <h2 class="fs-5">Editeurs et Producteurs</h2>
                     <a class="nav-link " href="{{ path('app_admin_editor_index' )}}">Liste</a>
                     <a class="nav-link " href="{{ path('app_admin_editor_new' )}}"  >Ajout</a>
+                </li>
+                <li class="nav-item">
+                    <h2 class="fs-5">Gestion des commentaires</h2>
+                    <a class="nav-link" href="{{path('app_admin_comment') }}">Voir</a>
                 </li>
             </ul>
             <div class="d-flex align-items-center flex-column mt-5">

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des commentaires{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5 py-5" style="min-height:100vh">
+    <a class="btn btn-outline-dark" href="{{ path('app_admin_main')}}">retour</a>
+    <h1 class="my-3 text-center">Liste des commentaires </h1>
+    {% for comment in comments %}
+        <div class="card my-2 ">
+            <div class="card-body row">
+                <blockquote class="blockquote mb-0 col-9">
+                    <h2 class="fs-5">{{ comment.book.title}}</h2>
+                    <p>{{ comment.content }}</p>
+                    <footer class="blockquote-footer">
+                        
+                        <cite title="Source title">{{ comment.name }}, {{ comment.createdAt|date('d M Y') }} </cite>
+                    </footer>
+                </blockquote>
+                <div class="col-3">
+                    <h2 class="fs-5">{{comment.status.getLabel()}}</h2>
+                    <a href="{{ path('app_admin_comment') }}?status=published&id={{comment.id}}" class="btn btn-outline-success" >Publier</a>
+                    <a href="{{ path('app_admin_comment') }}?status=moderated&id={{comment.id}}" class="btn btn-outline-danger" >Modérer</a>
+                    <!-- <a href="{{ path('app_admin_comment') }}?status=deleted&id={{comment.id}}" class="btn btn-outline-danger" >Supprimer</a> -->
+                </div>
+            </div>
+        </div>
+    {% else %}
+        Il n'y a pas de commentaires
+    {% endfor %}
+    {{ pagerfanta(comments) }}
+</div>
+{% endblock %}

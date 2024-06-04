@@ -52,6 +52,7 @@
                         {{ form_end(form) }}
                     </div>
                 </div>
+                <!-- commentaires -->
                 <div class="offset-1 col-10 text-center mt-3">
                     <h2>Les avis de nos visiteurs</h2>
                     {% for comment in comments %}
@@ -61,7 +62,7 @@
                                 <p>{{ comment.content }}</p>
                                 <footer class="blockquote-footer">
                                     
-                                    <cite title="Source title">{{ comment.name }}</cite>
+                                    <cite title="Source title">{{ comment.name }}, {{ comment.createdAt|date('d M Y') }}</cite>
                                 </footer>
                             </blockquote>
                         </div>

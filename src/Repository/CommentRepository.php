@@ -31,6 +31,13 @@ class CommentRepository extends ServiceEntityRepository
                ->setParameter('status', $media['status']);
         }
 
+        if (\array_key_exists('id', $media)) {
+            $qb->andWhere('c.id = :id')
+               ->setParameter('id', $media['id']);
+        }
+
+        $qb = $qb->orderBy('c.id', 'DESC');
+
         return $qb;
     }
     //    /**
