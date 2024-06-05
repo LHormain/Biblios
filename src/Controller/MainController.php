@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class MainController extends AbstractController
 {
+    // accueil site
     #[Route('/', name: 'app_main')]
     public function index(): Response
     {
@@ -17,6 +18,7 @@ class MainController extends AbstractController
         ]);
     }
 
+    // page categories du catalogue
     #[Route('/catalogue', name: 'app_catalogue')]
     public function catalogue(): Response
     {

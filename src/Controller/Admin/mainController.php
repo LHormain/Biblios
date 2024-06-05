@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class mainController extends AbstractController
 {
+    // page d’accueil de la section administrateur
     #[Route('/admin/main', name: 'app_admin_main')]
     public function index(): Response
     {

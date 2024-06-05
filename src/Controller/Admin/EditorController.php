@@ -17,6 +17,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/admin/editor')]
 class EditorController extends AbstractController
 {
+    // liste des editeurs
     #[IsGranted('ROLE_ADMIN')]
     #[Route('', name: 'app_admin_editor_index', methods: ['GET'])]
     public function index(Request $request, EditorRepository $repository): Response
@@ -32,6 +33,7 @@ class EditorController extends AbstractController
         ]);
     }
 
+    // ajout et mise à jour d'un éditeur
     #[IsGranted('ROLE_AJOUT_DE_LIVRE')]
     #[Route('/new', name: 'app_admin_editor_new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'app_admin_editor_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]

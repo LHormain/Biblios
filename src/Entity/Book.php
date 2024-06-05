@@ -80,10 +80,17 @@ class Book
     #[ORM\Column(length: 20)]
     private ?MediaTypes $mediaType = null;
 
+    /**
+     * @var Collection<int, GestionBooks>
+     */
+    #[ORM\OneToMany(targetEntity: GestionBooks::class, mappedBy: 'book')]
+    private Collection $gestionBooks;
+
     public function __construct()
     {
         $this->authors = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->gestionBooks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -285,6 +292,36 @@ class Book
     public function setMediaType(MediaTypes $mediaType): static
     {
         $this->mediaType = $mediaType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, GestionBooks>
+     */
+    public function getGestionBooks(): Collection
+    {
+        return $this->gestionBooks;
+    }
+
+    public function addGestionBook(GestionBooks $gestionBook): static
+    {
+        if (!$this->gestionBooks->contains($gestionBook)) {
+            $this->gestionBooks->add($gestionBook);
+            $gestionBook->setBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGestionBook(GestionBooks $gestionBook): static
+    {
+        if ($this->gestionBooks->removeElement($gestionBook)) {
+            // set the owning side to null (unless already changed)
+            if ($gestionBook->getBook() === $this) {
+                $gestionBook->setBook(null);
+            }
+        }
 
         return $this;
     }

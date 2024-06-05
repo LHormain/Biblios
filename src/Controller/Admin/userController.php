@@ -16,10 +16,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/admin/user')]
 class userController extends AbstractController
 {
+    // liste et gestion des utilisateurs
     #[Route('', name: 'app_admin_user_index', methods: ['GET'])]
     public function index(Request $request, UserRepository $repository, EntityManagerInterface $manager): Response
     {
-        // suppression d'un utilisateur ne marche pas si un user est lier à un book
+        // suppression d'un utilisateur ne marche pas si un user est lier à un book (par creation du book ou emprunt)
         $id = 0;
         $sup = 0;
         $role = '';

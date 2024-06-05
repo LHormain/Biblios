@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Book;
 use App\Entity\Comment;
+use App\Entity\GestionBooks;
+use App\Entity\User;
 use App\Enum\BookCategories;
+use App\Enum\BookStatus;
 use App\Enum\MediaTypes;
 use App\Enum\CommentStatus;
 use App\Form\CommentType;
@@ -20,10 +23,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/book')]
 class BookController extends AbstractController
 {
+    // liste des books
     #[Route('', name: 'app_book_index', methods: ['GET'])]
     public function index(?MediaTypes $type, Request $request, BookRepository $repository, EditorRepository $editorRepository): Response
     {
@@ -84,10 +89,12 @@ class BookController extends AbstractController
         ]);
     }
 
+    // affichage d'un book precis avec commentaires
     #[Route('/{id}', name: 'app_book_show', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function show(?Book $book, ?Comment $comment, Request $request, EntityManagerInterface $manager, CommentRepository $repository): Response
     {
-        // formulaire pour commentaires
+        // formulaire pour commentaires. tous les visiteurs peuvent commenter
+        // pour une version ou seul les visiteurs inscrits peuvent commenter faire une page similaire à celle pour emprunt book
         $comment ??= new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $today = new DateTimeImmutable();
@@ -106,7 +113,7 @@ class BookController extends AbstractController
         }
 
         $media['book'] = $book->getId();
-        $media['status'] = 'Published';
+        $media['status'] = 'Published'; // pour affichage commentaires
 
         $comments = Pagerfanta::createForCurrentPageWithMaxPerPage(
             // new QueryAdapter($repository->createQueryBuilder('c')),
@@ -114,11 +121,49 @@ class BookController extends AbstractController
             $request->query->get('page', default: 1),
             maxPerPage: 4
         );
+
+        
         
         return $this->render('book/show.html.twig', [
             'book' => $book,
             'form' => $form,
             'comments' => $comments,
+        ]);
+    }
+
+    //changer le status du livre en emprunté
+    #[IsGranted('ROLE_USER')]
+    #[Route('/{id}/edit', name: 'app_book_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function edit(?Book $book, Request $request, EntityManagerInterface $manager): Response
+    {
+
+        $statusBook = '';
+        $today = new DateTimeImmutable();
+
+        if ($request->query->has('status') && ($request->query->get('status')!= '')) {
+            $statusBook = $request->query->get('status');
+        }
+
+        if ($statusBook != '') {
+            // change le status du book dans Book
+            $book->setStatus(BookStatus::Borrowed);
+            $manager->flush();
+            // enregistre le couple book user et la date du jour dans GestionBook
+            $gestion = new GestionBooks();
+            $gestion->setBook($book);
+            $user = $this->getUser();
+            if (!$gestion->getId() && $user instanceof User) {
+                $gestion->setUser($user);
+            }
+            $gestion->setDateSortie($today);
+
+            $manager->persist($gestion);
+            $manager->flush();
+        }
+
+        // redirige sur la page du livre
+        return $this->redirectToRoute('app_book_show', [
+            'id' => $book->getId(),
         ]);
     }
 }

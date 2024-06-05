@@ -69,9 +69,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $lastConnectedAt = null;
 
+    /**
+     * @var Collection<int, GestionBooks>
+     */
+    #[ORM\OneToMany(targetEntity: GestionBooks::class, mappedBy: 'user')]
+    private Collection $gestionBooks;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
+        $this->gestionBooks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -223,6 +230,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastConnectedAt(?\DateTimeImmutable $lastConnectedAt): static
     {
         $this->lastConnectedAt = $lastConnectedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, GestionBooks>
+     */
+    public function getGestionBooks(): Collection
+    {
+        return $this->gestionBooks;
+    }
+
+    public function addGestionBook(GestionBooks $gestionBook): static
+    {
+        if (!$this->gestionBooks->contains($gestionBook)) {
+            $this->gestionBooks->add($gestionBook);
+            $gestionBook->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGestionBook(GestionBooks $gestionBook): static
+    {
+        if ($this->gestionBooks->removeElement($gestionBook)) {
+            // set the owning side to null (unless already changed)
+            if ($gestionBook->getUser() === $this) {
+                $gestionBook->setUser(null);
+            }
+        }
 
         return $this;
     }

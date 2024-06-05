@@ -16,6 +16,7 @@ use Pagerfanta\Pagerfanta;
 
 class commentController extends AbstractController
 {
+    // liste des commentaire classé en ordre du plus resent au plus ancien avec gestion
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/admin/comment', name: 'app_admin_comment', methods: ['GET'])]
     public function index(Request $request, CommentRepository $repository, EntityManagerInterface $manager): Response
@@ -30,7 +31,7 @@ class commentController extends AbstractController
             $id = $request->query->get('id');
         }
 
-        // mise a jour du status d'un commentaire
+        // mise a jour du status d'un commentaire et suppression
         $comment = $manager->getRepository(Comment::class)->find($id);
         if (!$comment && $id != 0) {
             throw $this->createNotFoundException(

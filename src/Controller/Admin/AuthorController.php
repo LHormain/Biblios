@@ -50,7 +50,7 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    // page Ajouter un nouvel auteur puis éditer un auteur
+    // page Ajouter un nouvel auteur et éditer un auteur
     #[IsGranted('ROLE_AJOUT_DE_LIVRE')]
     #[Route('/new', name: 'app_admin_author_new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'app_admin_author_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]

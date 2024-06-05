@@ -14,32 +14,34 @@
 </header>
 <section class="container" id="about">
     <div class="row justify-content-center py-4">
-        <div class="col-10">
+        <div class="col-9">
             <ul class="nav justify-content-evenly  ">
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center flex-column mb-5 mx-3">
                     <h2 class="fs-5">Livres, Film et Musiques</h2>
-                    <a class="nav-link " href="{{ path('app_admin_book_index' )}}" >Liste</a>
-                    <a class="nav-link " href="{{ path('app_admin_book_new' )}}"  >Ajout</a>
+                    <a class="btn btn-outline-dark px-5 mb-3" href="{{ path('app_admin_book_index' )}}" >Liste des oeuvres</a>
+                    <a class="btn btn-outline-dark px-5 mb-3" href="{{ path('app_admin_book_new' )}}"  >Ajout</a>
+                    <a class="btn btn-outline-dark px-5 mb-3" href="{{ path('app_admin_book_gestion' )}}"  >Gestion des emprunts</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center flex-column mb-5 mx-3">
                     <h2 class="fs-5">Auteurs, Réalisateurs et Artistes</h2>
-                    <a class="nav-link" href="{{ path('app_admin_author_index' )}}">Liste</a>
-                    <a class="nav-link" href="{{ path('app_admin_author_new' )}}"  >Ajout</a>
+                    <a class="btn btn-outline-dark px-5 mb-3" href="{{ path('app_admin_author_index' )}}">Liste</a>
+                    <a class="btn btn-outline-dark px-5 mb-3" href="{{ path('app_admin_author_new' )}}"  >Ajout</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center flex-column mb-5 mx-3">
                     <h2 class="fs-5">Editeurs et Producteurs</h2>
-                    <a class="nav-link " href="{{ path('app_admin_editor_index' )}}">Liste</a>
-                    <a class="nav-link " href="{{ path('app_admin_editor_new' )}}"  >Ajout</a>
+                    <a class="btn btn-outline-dark px-5 mb-3" href="{{ path('app_admin_editor_index' )}}">Liste</a>
+                    <a class="btn btn-outline-dark px-5 mb-3" href="{{ path('app_admin_editor_new' )}}"  >Ajout</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item d-flex align-items-center flex-column mb-5 mx-3">
                     <h2 class="fs-5">Gestion des commentaires</h2>
-                    <a class="nav-link" href="{{path('app_admin_comment') }}">Voir</a>
+                    <a class="btn btn-outline-dark px-5 mb-3" href="{{path('app_admin_comment') }}">Voir et gérer</a>
+                </li>
+                <li class="nav-item d-flex align-items-center flex-column mb-5 mx-3">
+                    <h2 class="fs-5">Utilisateurs</h2>
+                    <a href="{{ path('app_register') }}" class="btn btn-outline-dark px-5 mb-3">Ajouter un utilisateur</a>
+                    <a href="{{ path('app_admin_user_index') }}" class="btn btn-outline-dark px-5 ">Voir la liste des utilisateurs</a>
                 </li>
             </ul>
-            <div class="d-flex align-items-center flex-column mt-5">
-                <a href="{{ path('app_register') }}" class="btn btn-outline-dark px-5 mb-5">Ajouter un utilisateur</a>
-                <a href="{{ path('app_admin_user_index') }}" class="btn btn-outline-dark px-5 ">Voir la liste des utilisateurs</a>
-            </div>
         </div>
     </div>
 </section>

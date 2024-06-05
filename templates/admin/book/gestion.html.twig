@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste de livres{% endblock %}
+
+{% block body %}
+
+<section class="container mt-5 py-5" style="min-height:100vh">
+    <div class="row ">
+        <h1 class="col-12">Liste de {{ enTete }} {{ status }}</h1>
+        <div class="text-end mb-3 col-12">
+            <a class="btn btn-outline-dark" href="{{ path('app_admin_main')}}">retour</a>
+            <!-- filtre dans un encard offcanvas -->
+            <button
+                class="btn btn-outline-dark"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#Id1"
+                aria-controls="Id1"
+            >
+                Filtrer les Livres
+            </button>
+            
+            <div
+                class="offcanvas offcanvas-start"
+                data-bs-scroll="true"
+                tabindex="-1"
+                id="Id1"
+                aria-labelledby="Enable both scrolling & backdrop"
+            >
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="Enable both scrolling & backdrop">
+                        Options
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="">
+                        <h4>Filtres</h4>
+                        <!-- filtre pour l'affichage -->
+                        <form method='get' action=''>
+                            
+                            <div class="mb-3 row justify-content-between">
+                                <div class="col-4">
+                                    <label class="form-label">Type de médias</label>
+                                </div>
+                                <div class="col-8">
+                                    <select
+                                        class="form-select "
+                                        name="mediaType"
+                                        id=""
+                                    >
+                                        <option value="">Choisir une option</option>
+                                        {% for media in medias %}
+                                            <option value="{{ media.value }}">{{ media.getLabel() }} </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3 row justify-content-between">
+                                <div class="col-4">
+                                    <h5 class="form-label">Status</h5>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-check">
+                                        <input type="radio" name="status" class="form-check-input" id="borrowed" value="borrowed">
+                                        <label class="form-check-label" for="borrowed">Emprunté</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input type="radio" name="status" class="form-check-input" id="unavailable" value="unavailable">
+                                        <label class="form-check-label" for="unavailable">Indisponible</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3 text-end">
+                                <input type='submit' value="filtrer" class="btn btn-outline-dark">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+        <ul class="list-group list-group-flush flex-row flex-wrap justify-content-center">
+            {% for book in books %}
+                <div class="card col-2 m-2 position-relative">
+                    <img class="card-img-top img-fluid" src="{{ book.cover}}" alt="couverture du livre: {{ book.title }}" />
+                    <div class="card-body text-center">
+                        <h4 class="card-title">{{ book.title }}</h4>
+                        <p class="card-text text-muted"></p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ path('app_admin_book_gestion')}}?etat=available&id={{ book.id}}" class="btn btn-outline-dark mb-3">
+                            Remettre en Rayon
+                        </a>
+                        <a href="{{ path('app_admin_book_gestion')}}?etat=unavailable&id={{ book.id}}" class="btn btn-outline-dark mb-3">
+                            Indisponible
+                        </a>
+                    </div>
+                    <div class="position-absolute end-0 top-0 bg-info text-primary-enphasis rounded px-3 py-1 small">{{ book.status.getLabel() }}</div>
+                </div>
+            {% else %}
+                <li>
+                    Auncun enregistrement en base de données
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="col-12 d-flex justify-content-center mt-3">
+            {{ pagerfanta(books)}}
+        </div>
+    </div>
+</section>
+{% endblock %}

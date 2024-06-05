@@ -28,8 +28,11 @@
                     <div class="fs-5">
                         <span>Langue : {{ book.langue }} </span>
                     </div>
-                    <div class="fs-5 mb-5">
+                    <div class="fs-5 mb-5 d-flex justify-content-between">
                         <span>Statut: {{ book.status.getLabel() }}</span>
+                        {% if book.status.value == 'available' %}
+                            <a href="{{ path('app_book_edit', {id: book.id}) }}?status=borrowed" alt="" class="btn btn-outline-dark px-3">Emprunter</a>
+                        {% endif %}
                     </div>
                     <p class="lead">{{ book.plot }}</p>
                     <div class="d-flex">
@@ -52,7 +55,7 @@
                         {{ form_end(form) }}
                     </div>
                 </div>
-                <!-- commentaires -->
+                <!-- liste des commentaires -->
                 <div class="offset-1 col-10 text-center mt-3">
                     <h2>Les avis de nos visiteurs</h2>
                     {% for comment in comments %}

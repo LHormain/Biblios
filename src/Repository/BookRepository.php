@@ -22,11 +22,13 @@ class BookRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('b');
 
+        // publié apres le 
         if (\array_key_exists('start', $filtres)) {
             $qb->andWhere('b.editedAt >= :start')
                ->setParameter('start', new \DateTimeImmutable($filtres['start']));
         }
 
+        // publié avant le 
         if (\array_key_exists('end', $filtres)) {
             $qb->andWhere('b.editedAt <= :end')
                ->setParameter('end', new \DateTimeImmutable($filtres['end']));
@@ -50,6 +52,18 @@ class BookRepository extends ServiceEntityRepository
         if (\array_key_exists('mediaType', $filtres)) {
             $qb->andWhere('b.mediaType = :mediaType')
                ->setParameter('mediaType', $filtres['mediaType']);
+        }
+
+        // disponibilité
+        if (\array_key_exists('status', $filtres)) {
+            if ($filtres['status'] == 'available') {
+                $qb->andWhere('b.status != :status')
+                   ->setParameter('status', $filtres['status']);
+            }
+            else {
+                $qb->andWhere('b.status = :status')
+                   ->setParameter('status', $filtres['status']);
+            }
         }
 
         return $qb;
