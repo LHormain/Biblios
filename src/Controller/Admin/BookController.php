@@ -161,25 +161,28 @@ class BookController extends AbstractController
             $manager->flush();   
             // change la date de GestionBooks pour dire quand le livre est retourné en rayon
             $gestionbook = $manager->getRepository(GestionBooks::class)->findBy(['book' => $id], ['DateSortie' => 'DESC']);
-            $gestionbook[0] -> setDateRentre($today);
-            $manager->flush();    
+            if (isset($gestionbook[0])) {
+                $gestionbook[0] -> setDateRentre($today);
+                $manager->flush();    
+            }
         }
         elseif ($status == 'unavailable') {
             // change le status
             $book->setStatus(BookStatus::Unavailable);
-            $manager->flush();    
-            // ajoute a gestionBooks
-            $gestion = new GestionBooks();
-            $gestion->setBook($book);
-            // définie qui a rendu le livre indisponible
-            $user = $this->getUser();
-            if (!$gestion->getId() && $user instanceof User) {
-                $gestion->setUser($user);
-            }
-            $gestion->setDateSortie($today);
+            $manager->flush();   
 
-            $manager->persist($gestion);
-            $manager->flush();
+            // // ajoute a gestionBooks
+            // $gestion = new GestionBooks();
+            // $gestion->setBook($book);
+            // // définie qui a rendu le livre indisponible
+            // $user = $this->getUser();
+            // if (!$gestion->getId() && $user instanceof User) {
+            //     $gestion->setUser($user);
+            // }
+            // $gestion->setDateSortie($today);
+
+            // $manager->persist($gestion);
+            // $manager->flush();
         }
 
         // création de la liste à partir du filtre

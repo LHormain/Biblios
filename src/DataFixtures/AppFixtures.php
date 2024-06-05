@@ -6,6 +6,7 @@ use App\Factory\AuthorFactory;
 use App\Factory\BookFactory;
 use App\Factory\CommentFactory;
 use App\Factory\EditorFactory;
+use App\Factory\GestionBooksFactory;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -24,5 +25,6 @@ class AppFixtures extends Fixture
         UserFactory::createMany(15);
         BookFactory::createMany(100);
         CommentFactory::createMany(75);
+        GestionBooksFactory::createMany(75);
     }
 }
